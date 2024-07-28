@@ -27,16 +27,14 @@ const diffConfigs = (config1, config2) => {
     const has2 = config2.hasOwnProperty(key);
     const value1 = config1[key];
     const value2 = config2[key];
-    if (has1 && has2) {
-      if (value1 === value2) {
-        output += `    ${key}: ${value1}\n`;
-      } else {
-        output += `  - ${key}: ${value1}\n`;
-        output += `  + ${key}: ${value2}\n`;
-      }
-    } else if (has1) {
+    if (has1 && has2 && value1 === value2) {
+      output += `    ${key}: ${value1}\n`;
+      continue;
+    }
+    if (has1) {
       output += `  - ${key}: ${value1}\n`;
-    } else {
+    }
+    if (has2) {
       output += `  + ${key}: ${value2}\n`;
     }
   }
