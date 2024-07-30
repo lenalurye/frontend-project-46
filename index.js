@@ -39,6 +39,6 @@ const diffConfigs = (config1, config2) => {
     }
   }
   return `{\n${output}}`;
-}
+};
 
 export default diff;
