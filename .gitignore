@@ -1,3 +1,4 @@
 node_modules
 *.cast
 coverage
+.DS_Store

@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/lenalurye/frontend-project-46#readme",
   "dependencies": {
-    "commander": "^12.1.0"
+    "commander": "^12.1.0",
+    "js-yaml": "^4.1.0"
   },
   "type": "module",
   "bin": {
