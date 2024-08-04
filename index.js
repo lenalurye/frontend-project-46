@@ -1,22 +1,11 @@
 import fileParse from './format.js';
+import format from './formatters/index.js';
 
 const isObject = (value) => {
   if (typeof value === 'object' && value !== null) {
     return true;
   }
   return false;
-};
-
-const dumpValue = (value, prefix) => {
-  if (!isObject(value)) {
-    return value;
-  }
-  let output = '';
-  Object.keys(value).sort().forEach((key) => {
-    const dump = dumpValue(value[key], `${prefix}    `);
-    output += `${prefix}        ${key}: ${dump}\n`;
-  });
-  return `{\n${output}${prefix}    }`;
 };
 
 const uniqueKeys = (config1, config2) => {
@@ -29,41 +18,44 @@ const uniqueKeys = (config1, config2) => {
   return uniqueKeysArray.sort();
 };
 
-const diffConfigs = (config1, config2, prefix = '') => {
-  // Output the difference.
-  let output = '';
-  uniqueKeys(config1, config2).forEach((key) => {
-    const has1 = Object.hasOwn(config1, key);
-    const has2 = Object.hasOwn(config2, key);
-    const value1 = config1[key];
-    const value2 = config2[key];
+const diffObjects = (obj1, obj2) => {
+  const output = [];
+  uniqueKeys(obj1, obj2).forEach((key) => {
+    const has1 = Object.hasOwn(obj1, key);
+    const has2 = Object.hasOwn(obj2, key);
+    const value1 = obj1[key];
+    const value2 = obj2[key];
     if (has1 && has2) {
       if (isObject(value1) && isObject(value2)) {
-        const diff = diffConfigs(value1, value2, `${prefix}    `);
-        output += `${prefix}    ${key}: ${diff}\n`;
+        output.push({ type: 'in', key });
+        output.push(...diffObjects(value1, value2));
+        output.push({ type: 'out' });
         return;
       }
       if (value1 === value2) {
-        output += `${prefix}    ${key}: ${value1}\n`;
+        output.push({ type: 'no change', key, value: value1 });
         return;
       }
-    }
-    if (has1) {
-      const dump = dumpValue(value1, prefix);
-      output += `${prefix}  - ${key}: ${dump}\n`;
-    }
-    if (has2) {
-      const dump = dumpValue(value2, prefix);
-      output += `${prefix}  + ${key}: ${dump}\n`;
+      output.push({
+        type: 'changed',
+        key,
+        oldValue: value1,
+        newValue: value2,
+      });
+    } else if (has1) {
+      output.push({ type: 'removed', key, value: value1 });
+    } else {
+      output.push({ type: 'added', key, value: value2 });
     }
   });
-  return `{\n${output}${prefix}}`;
+  return output;
 };
 
-const diff = (filepath1, filepath2) => {
+const diffFiles = (filepath1, filepath2, formatName) => {
   const config1 = fileParse(filepath1);
   const config2 = fileParse(filepath2);
-  return diffConfigs(config1, config2);
+  const diff = diffObjects(config1, config2);
+  return format(diff, formatName);
 };
 
-export default diff;
+export default diffFiles;

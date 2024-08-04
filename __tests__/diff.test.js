@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 const pathToFixture = (fileName) => path.join(__dirname, '..', '__fixtures__', fileName);
 
 test('diff json', () => {
-  const want = readFileSync(pathToFixture('expected_output.txt')).toString();
+  const want = readFileSync(pathToFixture('expected_stylish.txt')).toString();
 
   expect(diff(pathToFixture('file1.json'), pathToFixture('file2.json'))).toBe(want);
 });
