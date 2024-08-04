@@ -1,6 +1,25 @@
 import fileParse from './format.js';
 
-const diffConfigs = (config1, config2) => {
+const isObject = (value) => {
+  if (typeof value === 'object' && value !== null) {
+    return true;
+  }
+  return false;
+};
+
+const dumpValue = (value, prefix) => {
+  if (!isObject(value)) {
+    return value;
+  }
+  let output = '';
+  Object.keys(value).sort().forEach((key) => {
+    const dump = dumpValue(value[key], `${prefix}    `);
+    output += `${prefix}        ${key}: ${dump}\n`;
+  });
+  return `{\n${output}${prefix}    }`;
+};
+
+const diffConfigs = (config1, config2, prefix = '') => {
   // Collect unique keys.
   const uniqueKeys = {};
   Object.keys(config1).forEach((key) => { uniqueKeys[key] = 1; });
@@ -17,18 +36,27 @@ const diffConfigs = (config1, config2) => {
     const has2 = Object.hasOwn(config2, key);
     const value1 = config1[key];
     const value2 = config2[key];
-    if (has1 && has2 && value1 === value2) {
-      output += `    ${key}: ${value1}\n`;
-      return;
+    if (has1 && has2) {
+      if (isObject(value1) && isObject(value2)) {
+        const diff = diffConfigs(value1, value2, `${prefix}    `);
+        output += `${prefix}    ${key}: ${diff}\n`;
+        return;
+      }
+      if (value1 === value2) {
+        output += `${prefix}    ${key}: ${value1}\n`;
+        return;
+      }
     }
     if (has1) {
-      output += `  - ${key}: ${value1}\n`;
+      const dump = dumpValue(value1, prefix);
+      output += `${prefix}  - ${key}: ${dump}\n`;
     }
     if (has2) {
-      output += `  + ${key}: ${value2}\n`;
+      const dump = dumpValue(value2, prefix);
+      output += `${prefix}  + ${key}: ${dump}\n`;
     }
   });
-  return `{\n${output}}`;
+  return `{\n${output}${prefix}}`;
 };
 
 const diff = (filepath1, filepath2) => {
