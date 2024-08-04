@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 const pathToFixture = (fileName) => path.join(__dirname, '..', '__fixtures__', fileName);
 
-test('diff json', () => {
+test('diff json stylish', () => {
   const want = readFileSync(pathToFixture('expected_stylish.txt')).toString();
 
   expect(diff(pathToFixture('file1.json'), pathToFixture('file2.json'))).toBe(want);
@@ -27,4 +27,10 @@ test('diff yaml', () => {
   ];
 
   expect(diff(pathToFixture('file1.yaml'), pathToFixture('file2.yml'))).toBe(want.join('\n'));
+});
+
+test('diff json plain', () => {
+  const want = readFileSync(pathToFixture('expected_plain.txt')).toString();
+
+  expect(diff(pathToFixture('file1.json'), pathToFixture('file2.json'), 'plain')).toBe(want);
 });
