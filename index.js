@@ -19,19 +19,20 @@ const dumpValue = (value, prefix) => {
   return `{\n${output}${prefix}    }`;
 };
 
-const diffConfigs = (config1, config2, prefix = '') => {
+const uniqueKeys = (config1, config2) => {
   // Collect unique keys.
-  const uniqueKeys = {};
-  Object.keys(config1).forEach((key) => { uniqueKeys[key] = 1; });
-  Object.keys(config2).forEach((key) => { uniqueKeys[key] = 1; });
-
+  const uniqueKeysObj = {};
+  Object.keys(config1).forEach((key) => { uniqueKeysObj[key] = 1; });
+  Object.keys(config2).forEach((key) => { uniqueKeysObj[key] = 1; });
   // Sort unique keys.
-  const uniqueKeysArray = Object.keys(uniqueKeys);
-  uniqueKeysArray.sort();
+  const uniqueKeysArray = Object.keys(uniqueKeysObj);
+  return uniqueKeysArray.sort();
+};
 
+const diffConfigs = (config1, config2, prefix = '') => {
   // Output the difference.
   let output = '';
-  uniqueKeysArray.forEach((key) => {
+  uniqueKeys(config1, config2).forEach((key) => {
     const has1 = Object.hasOwn(config1, key);
     const has2 = Object.hasOwn(config2, key);
     const value1 = config1[key];
