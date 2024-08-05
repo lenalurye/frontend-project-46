@@ -34,3 +34,8 @@ test('diff json plain', () => {
 
   expect(diff(pathToFixture('file1.json'), pathToFixture('file2.json'), 'plain')).toBe(want);
 });
+
+test('diff json', () => {
+  const want = JSON.parse(readFileSync(pathToFixture('expected_json.json')).toString());
+  expect(JSON.parse(diff(pathToFixture('file1.json'), pathToFixture('file2.json'), 'json'))).toStrictEqual(want);
+});

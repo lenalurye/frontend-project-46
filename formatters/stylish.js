@@ -24,11 +24,11 @@ export default (diff) => {
     let dump;
     switch (command.type) {
       case 'added':
-        dump = dumpValue(command.value, prefix);
+        dump = dumpValue(command.newValue, prefix);
         output += `${prefix}  + ${command.key}: ${dump}\n`;
         break;
       case 'removed':
-        dump = dumpValue(command.value, prefix);
+        dump = dumpValue(command.oldValue, prefix);
         output += `${prefix}  - ${command.key}: ${dump}\n`;
         break;
       case 'changed':

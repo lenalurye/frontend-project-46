@@ -43,9 +43,9 @@ const diffObjects = (obj1, obj2) => {
         newValue: value2,
       });
     } else if (has1) {
-      output.push({ type: 'removed', key, value: value1 });
+      output.push({ type: 'removed', key, oldValue: value1 });
     } else {
-      output.push({ type: 'added', key, value: value2 });
+      output.push({ type: 'added', key, newValue: value2 });
     }
   });
   return output;

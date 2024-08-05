@@ -1,0 +1,85 @@
+[
+  {
+    "key": "common.follow",
+    "type": "added",
+    "newValue": false
+  },
+  {
+    "key": "common.setting2",
+    "type": "removed",
+    "oldValue": 200
+  },
+  {
+    "key": "common.setting3",
+    "type": "changed",
+    "oldValue": true,
+    "newValue": null
+  },
+  {
+    "key": "common.setting4",
+    "type": "added",
+    "newValue": "blah blah"
+  },
+  {
+    "key": "common.setting5",
+    "type": "added",
+    "newValue": {
+      "key5": "value5"
+    }
+  },
+  {
+    "key": "common.setting6.doge.wow",
+    "type": "changed",
+    "oldValue": "",
+    "newValue": "so much"
+  },
+  {
+    "key": "common.setting6.ops",
+    "type": "added",
+    "newValue": "vops"
+  },
+  {
+    "key": "group1.baz",
+    "type": "changed",
+    "oldValue": "bas",
+    "newValue": "bars"
+  },
+  {
+    "key": "group1.nest",
+    "type": "changed",
+    "oldValue": {
+      "key": "value"
+    },
+    "newValue": "str"
+  },
+  {
+    "key": "group2",
+    "type": "removed",
+    "oldValue": {
+      "abc": 12345,
+      "deep": {
+        "id": 45
+      }
+    }
+  },
+  {
+    "key": "group3",
+    "type": "added",
+    "newValue": {
+      "deep": {
+        "id": {
+          "number": 45
+        }
+      },
+      "fee": 100500
+    }
+  },
+  {
+    "key": "null test",
+    "type": "changed",
+    "oldValue": {
+
+    },
+    "newValue": null
+  }
+]

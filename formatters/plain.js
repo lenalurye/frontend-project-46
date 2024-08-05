@@ -23,7 +23,7 @@ export default (diff) => {
   diff.forEach((command) => {
     switch (command.type) {
       case 'added':
-        output.push(`Property '${keyPath(path, command)}' was added with value: ${dumpValue(command.value)}`);
+        output.push(`Property '${keyPath(path, command)}' was added with value: ${dumpValue(command.newValue)}`);
         break;
       case 'removed':
         output.push(`Property '${keyPath(path, command)}' was removed`);
