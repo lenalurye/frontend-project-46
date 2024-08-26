@@ -12,9 +12,8 @@ const dumpValue = (value) => {
 
 const keyPath = (path, command) => path.map((pathElement) => `${pathElement}.`).join('') + command.key;
 
-export default (diff) => {
+const format = (diff, path = []) => {
   const output = [];
-  const path = [];
   diff.forEach((command) => {
     switch (command.type) {
       case 'added':
@@ -26,14 +25,12 @@ export default (diff) => {
       case 'changed':
         output.push(`Property '${keyPath(path, command)}' was updated. From ${dumpValue(command.oldValue)} to ${dumpValue(command.newValue)}`);
         break;
-      case 'in':
-        path.push(command.key);
-        break;
-      case 'out':
-        path.pop();
+      case 'nested':
+        output.push(format(command.children, [...path, command.key]));
         break;
       default:
     }
   });
   return output.join('\n');
 };
+export default format;

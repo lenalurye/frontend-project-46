@@ -1,8 +1,7 @@
 const keyPath = (path, command) => path.map((pathElement) => `${pathElement}.`).join('') + command.key;
 
-export default (diff) => {
+const format = (diff, path = []) => {
   const output = [];
-  const path = [];
   diff.forEach((command) => {
     switch (command.type) {
       case 'added':
@@ -10,14 +9,12 @@ export default (diff) => {
       case 'changed':
         output.push({ ...command, key: keyPath(path, command) });
         break;
-      case 'in':
-        path.push(command.key);
-        break;
-      case 'out':
-        path.pop();
+      case 'nested':
+        output.push(...format(command.children, [...path, command.key]));
         break;
       default:
     }
   });
-  return JSON.stringify(output, null, 2);
+  return output;
 };
+export default (diff) => JSON.stringify(format(diff), null, 2);

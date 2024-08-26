@@ -11,9 +11,7 @@ const diffObjects = (obj1, obj2) => {
     const value2 = obj2[key];
     if (has1 && has2) {
       if (isObject(value1) && isObject(value2)) {
-        output.push({ type: 'in', key });
-        output.push(...diffObjects(value1, value2));
-        output.push({ type: 'out' });
+        output.push({ type: 'nested', key, children: diffObjects(value1, value2) });
         return;
       }
       if (value1 === value2) {

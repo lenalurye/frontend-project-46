@@ -12,9 +12,8 @@ const dumpValue = (value, prefix) => {
   return `{\n${output}${prefix}    }`;
 };
 
-export default (diff) => {
+const format = (diff, prefix = '') => {
   let output = '{\n';
-  let prefix = '';
   diff.forEach((command) => {
     let dump;
     switch (command.type) {
@@ -35,16 +34,15 @@ export default (diff) => {
       case 'no change':
         output += `${prefix}    ${command.key}: ${command.value}\n`;
         break;
-      case 'in':
-        output += `${prefix}    ${command.key}: {\n`;
-        prefix += '    ';
-        break;
-      case 'out':
-        prefix = prefix.slice(4);
-        output += `${prefix}    }\n`;
+      case 'nested':
+        output += `${prefix}    ${command.key}: `;
+        output += format(command.children, `${prefix}    `);
+        output += '\n';
         break;
       default:
     }
   });
-  return `${output}}`;
+  return `${output}${prefix}}`;
 };
+
+export default format;
