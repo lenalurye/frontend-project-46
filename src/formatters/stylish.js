@@ -11,14 +11,9 @@ const dumpValue = (value, prefix) => {
   return `{\n${output}${prefix}    }`;
 };
 
-const formatAdded = (prefix, command) => {
-  const dump = dumpValue(command.newValue, prefix);
-  return `${prefix}  + ${command.key}: ${dump}\n`;
-};
-
-const formatRemoved = (prefix, command) => {
-  const dump = dumpValue(command.oldValue, prefix);
-  return `${prefix}  - ${command.key}: ${dump}\n`;
+const formatAddedOrRemoved = (prefix, key, value, symbol) => {
+  const dump = dumpValue(value, prefix);
+  return `${prefix}  ${symbol} ${key}: ${dump}\n`;
 };
 
 const formatChanged = (prefix, command) => {
@@ -37,9 +32,9 @@ const format = (diff, prefix = '') => {
   const output = diff.map((command) => {
     switch (command.type) {
       case 'added':
-        return formatAdded(prefix, command);
+        return formatAddedOrRemoved(prefix, command.key, command.newValue, '+');
       case 'removed':
-        return formatRemoved(prefix, command);
+        return formatAddedOrRemoved(prefix, command.key, command.oldValue, '-');
       case 'changed':
         return formatChanged(prefix, command);
       case 'no change':

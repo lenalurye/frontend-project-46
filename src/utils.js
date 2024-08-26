@@ -14,3 +14,5 @@ export const uniqueKeys = (config1, config2) => {
   const uniqueKeysArray = Object.keys(uniqueKeysObj);
   return uniqueKeysArray.sort();
 };
+
+export const keyPath = (path, command) => path.map((pathElement) => `${pathElement}.`).join('') + command.key;

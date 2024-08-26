@@ -1,4 +1,4 @@
-import { isObject } from '../utils.js';
+import { isObject, keyPath } from '../utils.js';
 
 const dumpValue = (value) => {
   if (isObject(value)) {
@@ -9,8 +9,6 @@ const dumpValue = (value) => {
   }
   return value;
 };
-
-const keyPath = (path, command) => path.map((pathElement) => `${pathElement}.`).join('') + command.key;
 
 const format = (diff, path = []) => diff.map((command) => {
   switch (command.type) {

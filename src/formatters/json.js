@@ -1,4 +1,4 @@
-const keyPath = (path, command) => path.map((pathElement) => `${pathElement}.`).join('') + command.key;
+import { keyPath } from '../utils.js';
 
 const format = (diff, path = []) => diff.flatMap((command) => {
   switch (command.type) {
