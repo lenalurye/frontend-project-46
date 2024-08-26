@@ -12,25 +12,18 @@ const dumpValue = (value) => {
 
 const keyPath = (path, command) => path.map((pathElement) => `${pathElement}.`).join('') + command.key;
 
-const format = (diff, path = []) => {
-  const output = [];
-  diff.forEach((command) => {
-    switch (command.type) {
-      case 'added':
-        output.push(`Property '${keyPath(path, command)}' was added with value: ${dumpValue(command.newValue)}`);
-        break;
-      case 'removed':
-        output.push(`Property '${keyPath(path, command)}' was removed`);
-        break;
-      case 'changed':
-        output.push(`Property '${keyPath(path, command)}' was updated. From ${dumpValue(command.oldValue)} to ${dumpValue(command.newValue)}`);
-        break;
-      case 'nested':
-        output.push(format(command.children, [...path, command.key]));
-        break;
-      default:
-    }
-  });
-  return output.join('\n');
-};
+const format = (diff, path = []) => diff.map((command) => {
+  switch (command.type) {
+    case 'added':
+      return `Property '${keyPath(path, command)}' was added with value: ${dumpValue(command.newValue)}`;
+    case 'removed':
+      return `Property '${keyPath(path, command)}' was removed`;
+    case 'changed':
+      return `Property '${keyPath(path, command)}' was updated. From ${dumpValue(command.oldValue)} to ${dumpValue(command.newValue)}`;
+    case 'nested':
+      return format(command.children, [...path, command.key]);
+    default:
+      return '';
+  }
+}).filter((string) => string).join('\n');
 export default format;
