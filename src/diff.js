@@ -24,7 +24,7 @@ const diffObjects = (obj1, obj2) => uniqueKeys(obj1, obj2).map((key) => {
   return { type: 'added', key, newValue: val2 };
 });
 
-const diffFiles = (filepath1, filepath2, formatName) => {
+const diffFiles = (filepath1, filepath2, formatName = 'stylish') => {
   const config1 = fileParse(filepath1);
   const config2 = fileParse(filepath2);
   const diff = diffObjects(config1, config2);
