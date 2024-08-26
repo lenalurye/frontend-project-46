@@ -1,22 +1,6 @@
 import fileParse from './parsers.js';
 import format from './formatters/index.js';
-
-const isObject = (value) => {
-  if (typeof value === 'object' && value !== null) {
-    return true;
-  }
-  return false;
-};
-
-const uniqueKeys = (config1, config2) => {
-  // Collect unique keys.
-  const uniqueKeysObj = {};
-  Object.keys(config1).forEach((key) => { uniqueKeysObj[key] = 1; });
-  Object.keys(config2).forEach((key) => { uniqueKeysObj[key] = 1; });
-  // Sort unique keys.
-  const uniqueKeysArray = Object.keys(uniqueKeysObj);
-  return uniqueKeysArray.sort();
-};
+import { isObject, uniqueKeys } from './utils.js';
 
 const diffObjects = (obj1, obj2) => {
   const output = [];

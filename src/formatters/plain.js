@@ -1,9 +1,4 @@
-const isObject = (value) => {
-  if (typeof value === 'object' && value !== null) {
-    return true;
-  }
-  return false;
-};
+import { isObject } from '../utils.js';
 
 const dumpValue = (value) => {
   if (isObject(value)) {
