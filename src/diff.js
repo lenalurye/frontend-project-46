@@ -1,4 +1,4 @@
-import fileParse from './format.js';
+import fileParse from './parsers.js';
 import format from './formatters/index.js';
 
 const isObject = (value) => {
