@@ -4,7 +4,7 @@ const dumpValue = (value, prefix) => {
   if (!isObject(value)) {
     return value;
   }
-  const output = Object.keys(value).sort().map((key) => {
+  const output = Object.keys(value).toSorted().map((key) => {
     const dump = dumpValue(value[key], `${prefix}    `);
     return `${prefix}        ${key}: ${dump}\n`;
   }).join('');
