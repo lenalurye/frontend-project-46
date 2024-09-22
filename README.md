@@ -1,5 +1,4 @@
-### Hexlet tests and linter status
-
+### Hexlet tests and linter status:
 [![Hexlet Actions Status](https://github.com/lenalurye/frontend-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/lenalurye/frontend-project-46/actions)
 
 [![Project Actions Status](https://github.com/lenalurye/frontend-project-46/actions/workflows/nodejs.yml/badge.svg)](https://github.com/lenalurye/frontend-project-46/actions)
@@ -8,8 +7,7 @@
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/28945928a913e297ecda/test_coverage)](https://codeclimate.com/github/lenalurye/frontend-project-46/test_coverage)
 
-### About
-
+### About:
 This program compares two configuration files in either of json / yaml formats and outputs the difference in
 different formats:
 
@@ -17,8 +15,7 @@ different formats:
 * plain - a simple text format suitable for automatic processing
 * json - machine-readable list of differences
 
-### CLI usage
-
+### CLI usage:
 ```
 Usage: gendiff [options] <filepath1> <filepath2>
 
@@ -26,20 +23,18 @@ Compares two configuration files and shows a difference.
 
 Options:
   -V, --version        output the version number
-  -f, --format [type]  output format
+  -f, --format [type]  output format (default: "stylish")
   -h, --help           display help for command
 ```
 
-### Library usage
-
+### Library usage:
 ```javascript
 import diff from 'frontend-project-46/diff.js';
 
 diff('file1', 'file2', 'stylish');  // contents of the diff
 ```
 
-### Demos
-
+### Demos:
 Format stylish
 
 https://asciinema.org/a/bAXKTiUB4NPIXQjP2vmQucGWr
